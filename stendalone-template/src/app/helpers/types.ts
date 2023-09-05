@@ -1,200 +1,234 @@
 //אובייקט גדול
-export interface Father{
-  sectionA:SectionA;
-  sectionB:SectionB;
-  sectionC:SectionC;
+export interface Father {
+  sectionA: SectionA;
+  sectionB: SectionB;
+  sectionC: SectionC;
 }
 //פרוט אבא סקשיין א
-export interface SectionA{
-  employeeDetails:EmployeeDetails;
-  employerDetails:EmployerDetails;
-  a3:A3;
-  a4:A4;
-  a5:A5[];
-  a6:A6;
-  a7:A7;
-  a8:A8[];
-  a9:A9[];
-  a10:A10;
-  a11:A11;
-  a12:A12;
-  a13:A13;
+export interface SectionA {
+  employeeDetails: EmployeeDetails;
+  employerDetails: EmployerDetails;
+  endingCause: EndingCause;
+  workPeriod: WorkPeriod;
+  workStatusChanges: WorkStatusChange[];
+  salary: Salary;
+  budgetaryPension: BudgetaryPension;
+  endingBonuses: EndingBonus[];
+  workBonuses: WorkBonuses;
+  employerDeposits: EmployerDeposit[];
+  pensions: Pension[];
+  overheadPension: OverheadPension;
+  maxAllowedPayments: MaxAllowedPayments;
 }
 //פרוט נכדים סקשיין א
-export interface EmployeeDetails{
-  id:number;
-  firstName:string;
-  lastName:string;
-  dateOfBirth:Date;
-  address:Address;
-  email?:string;
-  phone:number;
-  assessor?:string; // לשאול
-  markingsInCellA1?:string; // לשאול
-  originalFormOrCorrection:string; // לשאול
-  date:Date;
+export interface EmployeeDetails {
+  Id: number;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: Date;
+  street: string;
+  appartment: string;
+  city: string;
+  postalCode?: number;
+  isHolder: boolean;
+  isHolderRelative: boolean;
+  relationType?: string; // לשאול
+  phone: number;
+  email?: string;
 }
 
-export interface Address{
-  street:string;
-  country:string;
-  postalCode?:number;
+export interface EmployerDetails {
+  deductionFileId: number;
+  name: string;
+  street: string;
+  appartment: string;
+  city: string;
+  postalCode?: number;
+  email: string;
+  phone: number;
 }
 
-export interface EmployerDetails{
-  deductionFileID:number;
-  name:string;
-  addres:string;
-  email:string;
-  phone:number;
+export enum EndingCauseEnum {
+  Retirement = 1,
+  Death = 2,
+  Disability = 3,
 }
 
-export interface A3{
-  cellsToChoose:string; // לשאול
+export interface EndingCause {
+  endingCause: EndingCauseEnum;
 }
 
-export interface A4{
-  dateFirst:Date;
-  retirementDate:Date;
-  workPeriod:number;
+export interface WorkPeriod {
+  startDate: Date;
+  endDate: Date;
+  workPeriod: number;
 }
 
-export interface A5{
-  dateFirst?:Date;
-  endDate?:Date;
-  jobRate?:number;
-  lastSalary?:number;
+export interface WorkStatusChange {
+  startDate?: Date;
+  endDate?: Date;
+  jobRate?: number;
+  periodLastSalary?: number;
 }
 
-export interface A6{
-  lastSalary:number;
-  guaranteedSalary:number;
-  compensationSalary:number;
+export interface Salary {
+  lastSalary: number;
+  guaranteedSalary: number;
+  compensationSalary: number;
 }
-export interface A7{
-  notEntitledToPension?:boolean;
-  entitledToPension?:boolean;
-  date?:Date;
-  salary?:number;
+export interface BudgetaryPension {
+  notEntitledToPension?: boolean;
+  fromDate?: Date;
+  baseSalary?: number;
 }
-export interface A8{
-  dateOfPayment:Date;
-  sum:number;
+export interface EndingBonus {
+  paymentDate: Date;
+  sum: number;
 }
-export interface A9{
-  payingName:string;
-  deductionFileID:number;
-  payCode:number;
-  formOfPayment?:NameAndCode;// רשום בחירה מתוך רשימה לכן יצרתי אובייקט
-  dateOfDepositOrPayment?:Date;
-  lastDepositDate?:Date;
-  amountForTheDayOfRetirement:number;
-  additionalAccumulation?:number;
-  total:number;
-  totalA9:number;
+export interface WorkBonuses {
+  workBonus: WorkBonus[];
+  sum: number;
 }
-export interface NameAndCode{
-  sDesc:string;
-  iCode:number;
+export interface WorkBonus {
+  payerCode: number;
+  payerName: string;
+  paymentType: string;
+  deductionFileId: number;
+  firstDepositDate?: Date;
+  paymentDate?: Date;
+  lastDepositDate?: Date;
+  retirementDateSum: number;
+  additionalAccumulation?: number;
+  total: number;
 }
-export interface A10{
-  theEmployeeIsCharged:boolean;
-  PaymentDetails :PaymentDetails[]; 
-  totalPaymentsCharged:number;
-  totalPaymentsDebitedWithProfits:number;
+export interface NameAndCode {
+  // paymentType?: NameAndCode; // רשום בחירה מתוך רשימה לכן יצרתי אובייקט
+  sDesc: string;
+  iCode: number;
 }
-export interface PaymentDetails{
-  payingName:string;
-  deductionFileID:number;
-  chargedPayments:number;
-  chargedPaymentsIncludingProfits:number;
+export interface EmployerDeposit {
+  employeeIncomeIsCharged: boolean;
+  PaymentsDetails: PaymentDetails[];
+  totalChargedPayments: number;
+  totalDebitedPaymentsIncludingProfits: number;
+}
+export interface PaymentDetails {
+  payerName: string;
+  deductionFileId: number;
+  chargedPayments: number;
+  chargedPaymentsIncludingProfits: number;
 }
 
-export interface A11{
-  PreRetirementPensionDetails?:PreRetirementPensionDetails[];
-  totalA?:number;
-  totalGrantAmount?:number;
+export interface Pension {
+  PensionsDetails?: PensionDetails[];
+  PensionsTotal?: number;
+  totalGrantAmount?: number;
 }
-export interface PreRetirementPensionDetails{
-  payingName?:string;
-  deductionFileID:number;
-  payCode?:number;
-  monthOfConversionToPension?:Date;
-  allowanceAmount?:number;
-  total?:number;
+export interface PensionDetails {
+  payerCode?: number;
+  payerName?: string;
+  paymentType: string;
+  deductionFileId: number;
+  firstDepositDate?: Date;
+  paymentDate?: Date;
+  lastDepositDate?: Date;
+  retirementDateSum: number;
+  additionalAccumulation?: number;
+  total: number;
 }
-export interface A12{
-  checkbox1:boolean;
-  checkbox2:boolean;
+export interface OverheadPension {
+  overheadPension: boolean;
+  otherPayers: boolean;
 }
-export interface A13{
-  TotalGrantAmount:number;
-  AmountForAnnuitySequence:number;
-  AmountForCompensationSequence:number;
-  TheAmountOfTheExemptGrant:number;
-  TheAmountOfTheTaxableGrant:number;
+export interface MaxAllowedPayments {
+  totalGrantAmount: number;
+  amountForAnnuitySequence: number;
+  amountForCompensationSequence: number;
+  amountOfTheExemptGrant: number;
+  amountOfTheTaxableGrant: number;
 }
 
 //פרוט אבא סקשיין ב
 //לשאול לגבי השדות חובה כתוב : חובה למלא רק בתרחיש חלופה ב
-export interface SectionB{
-  b1:B1;
-  b2:B2;
-  b3:B3;
+export interface SectionB {
+  employeeRequests: EmployeeRequests;
+  additionalRequests: AdditionalRequests;
+  employeeStatments: EmployeeStatments;
 }
 
 //פרוט נכדים סקשיין ב
-export interface B1{
-  deductionFileID:number;//לשאול
-  TotalAmount:number;
-  allowanceSequence?:number;
-  compensationSequence:number;
-  ExemptionGrant:number;
-  grantRequired:number;
-  //תאים בצבע אפור למעט סה"כ לא יודעת איך לקרוא לזה - לא יודעת אם זה בכלל מייצג אובייקט לא הצלחתי  להבין
-  total:number;
+export interface EmployeeRequests {
+  employeeRequests: EmployeeRequest[];
+  taxableGrant: Total;
+  totalAmount: Total;
+  sum: Sum;
+}
+export interface Total {
+  TotalAmountSum: number;
+  allowanceSequenceSum?: number;
 }
 
-export interface B2{
-  checkbox1?:boolean;
-  checkbox2?:boolean;
-  sum:number;
-  providentFundName:string;
-  deductionFileID:number;
+export interface Sum {
+  TotalAmount: number;
+  allowanceSequence: number;
+  compensationSequence?: number;
+  ExemptionGrant?: number;
+  grantRequired: number;
 }
-export interface B3{
-  checkbox1?:boolean;
-  checkbox2?:boolean;
-  checkbox3?:boolean;
-  workerName:string;
-  date:Date;
-  signature:string;
+export interface EmployeeRequest {
+  deductionFileId: number; //לשאול
+  TotalAmount: number;
+  allowanceSequence: number;
+  compensationSequence?: number;
+  ExemptionGrant?: number;
+  grantRequired: number;
+}
+
+export interface AdditionalRequests {
+  devideBonus: boolean;
+  dedicateSum?: number;
+  fundName: string;
+  deductionFileId?: number;
+}
+export interface EmployeeStatments {
+  employeeIsOnlyPayer: boolean; //default false
+  singleRequest: boolean; //default false
+  noDeclaredRetirment?: boolean; //default false
+  emploeeName: string;
+  date: Date;
+  signature?: string;
 }
 //פרוט אבא סקשיין ג
-export interface SectionC{
-  c1:C1;
-  c2:C2;
-  c3:C3;
+export interface SectionC {
+  sectionBSummary: SectionBSummary;
+  instructions: Instructions;
+  c3: C3;
 }
 //פרוט נכדים סקשיין ג
-export interface C1{
-  checkbox1?:boolean;//תרחיש חלופה א
-  checkbox12?:boolean;//תרחיש חלופה א
-  checkbox21?:boolean;//תרחיש חלופה ב
-  checkbox22?:boolean;//תרחיש חלופה ב
-  totalgrantAmount:number;
-  amountForannuitySequence:number;
-  amountForCompensationSequence:number
-  theAmountOfTheExemptGrant:number;
-  boxOfficeInstructions:number;
+export interface SectionBSummary {
+  noSectionB: boolean;
+  employyeHasControlOrRelative: boolean; //default false
+  employyeDeceased: boolean; //default false
+  noTaxCharge: boolean; //default false
+  requestsInLimits: boolean; //default false
+  noAdditionalRequests: boolean; //default false
+  DeclirationTerms: boolean; //default false
+
+  totalGrantAmount: number;
+  amountForAnnuitySequence: number;
+  amountForCompensationSequence: number;
+  amountOfExemptGrant: number;
+  amountOfTaxableGrant: number;
+  boxOfficeInstructions: number;
 }
-export interface C2{
-  checkbox1?:boolean;
+export interface Instructions {
+  invalidTermsWithSectionB?: string[];
+  invalidTermsWithoutSectionB?: string[];
 }
-export interface C3{
-  date:Date;
-  fullName:string;
-  role:string;
-  signature:string;
-  stamp:string;
+export interface C3 {
+  date: Date;
+  fullName: string;
+  role: string;
+  signature?: string;
+  stamp?: string;
 }
